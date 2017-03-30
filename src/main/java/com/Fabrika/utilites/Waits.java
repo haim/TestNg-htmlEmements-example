@@ -8,6 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.yandex.qatools.allure.annotations.Step;
+import ru.yandex.qatools.htmlelements.element.TypifiedElement;
 
 import javax.annotation.Nullable;
 
@@ -46,4 +47,18 @@ public class Waits {
             }
         };
     }
+
+    public static ExpectedCondition<Boolean> visibilityOfHtmlElement(final TypifiedElement element) {
+        return new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(WebDriver webDriver) {
+                try {
+                    return element.isDisplayed();
+                } catch (NoSuchElementException | StaleElementReferenceException | AssertionError e) {
+                    return false;
+                }
+            }
+        };
+    }
+
 }

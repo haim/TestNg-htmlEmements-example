@@ -1,39 +1,38 @@
-package com.Fabrika.UiObjects;
+package com.Fabrika.Objects;
 
 
-
-import com.Fabrika.UiObjects.Pages.*;
-import com.jayway.restassured.builder.RequestSpecBuilder;
-import com.jayway.restassured.response.*;
-import com.jayway.restassured.specification.RequestSpecification;
-import com.mongodb.*;
+import com.Fabrika.Objects.Pages.HomePage;
+import com.Fabrika.Objects.Pages.LoginPage;
+import com.jayway.restassured.response.Response;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
-import static com.jayway.restassured.RestAssured.given;
-import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 import ru.yandex.qatools.allure.annotations.Attachment;
 import ru.yandex.qatools.allure.annotations.Step;
-import java.util.List;
+import ru.yandex.qatools.htmlelements.element.TypifiedElement;
+
 import java.util.List;
 import java.util.Map;
 
-import static org.testng.Assert.*;
-import static com.Fabrika.utilites.Waits.*;
-import static org.openqa.selenium.support.ui.ExpectedConditions.*;
+import static com.Fabrika.utilites.Waits.visibilityOfElement;
+import static com.Fabrika.utilites.Waits.visibilityOfHtmlElement;
+import static com.jayway.restassured.RestAssured.given;
+import static org.openqa.selenium.support.ui.ExpectedConditions.alertIsPresent;
+import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
+import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotSame;
+import static org.testng.Assert.assertTrue;
 
 public class Website {
 
     public static EventFiringWebDriver webDriver;
     public static WebDriverWait wait;
     public static final Logger log = Logger.getLogger(Website.class);
-    public static HomePage homePage;
-    public static PostPage postPage;
+
 
     public Website(EventFiringWebDriver driver){
         this.webDriver = driver;
@@ -41,18 +40,13 @@ public class Website {
         PageFactory.initElements(webDriver, this);
     }
 
+    public static final String DOMAIN_NAME = "http://vlay.pythonanywhere.com";
+    public static final String WEBSITE_URI = "/test_1/";
+    public static final String BASE_URL = DOMAIN_NAME + WEBSITE_URI;
 
-    public static final String BASE_URL = "http://vlay.pythonanywhere.com/test_1/";
 
-    @FindBy(linkText = "Logout")public static WebElement logOutButton;
-    @FindBy(linkText = "Login") public static WebElement logInButton;
-
-    public Verifications verifications(){return new Verifications(webDriver);}
-    public RegistrationPage registrationPage(){return new RegistrationPage(webDriver);}
-    public HomePage homePage(){return new HomePage(webDriver);}
-    public ProfilePage profilePage(){ return new ProfilePage(webDriver);}
     public LoginPage loginPage(){return new LoginPage(webDriver);}
-    public PostPage postPage(){ return new PostPage(webDriver);}
+    public HomePage homePage() { return new HomePage(webDriver);}
 
 
 
@@ -60,6 +54,7 @@ public class Website {
     public byte[] makeScreenshot() {
         return ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.BYTES);
     }
+
 
     @Step("Load page - \"{0}\"")
     public void loadPage(String url, String title){
@@ -108,6 +103,18 @@ public class Website {
             e.printStackTrace();
             log.error("Cannot find element: " + element + " " + element.getText());
         }
+    }
+
+    public void waitForHtmlElement(TypifiedElement element){
+        try {
+            wait = new WebDriverWait(webDriver, 10);
+            wait.until(visibilityOfHtmlElement(element));
+            assertTrue(element.isDisplayed());
+        } catch (Exception e){
+            e.printStackTrace();
+            log.error("Cannot find element: " + element + " " + element.toString());
+        }
+
     }
 
     @Step("Waiting for clickable element - \"{0}\"")
@@ -190,7 +197,7 @@ public class Website {
         }
     }
 
-    @Step("Logout")
+  /*  @Step("Logout")
     public void logOut(){
         try {
             if (logOutButton.isDisplayed()) {
@@ -207,7 +214,7 @@ public class Website {
             log.error("Error occured in logout function!");
         }
 
-    }
+    }*/
 
     public void confirmAlert(String alertMessage){
         wait.until(alertIsPresent());

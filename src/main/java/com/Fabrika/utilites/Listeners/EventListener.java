@@ -2,14 +2,11 @@ package com.Fabrika.utilites.Listeners;
 
 
 
-import com.Fabrika.UiObjects.Website;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.events.WebDriverEventListener;
-import org.testng.ITestResult;
 import ru.yandex.qatools.allure.annotations.Attachment;
 
 public class EventListener implements WebDriverEventListener {

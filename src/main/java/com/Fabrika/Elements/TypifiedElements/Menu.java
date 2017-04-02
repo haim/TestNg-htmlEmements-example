@@ -1,4 +1,4 @@
-package com.Fabrika.utilites.TypifiedElements;
+package com.Fabrika.Elements.TypifiedElements;
 
 
 import org.openqa.selenium.By;
@@ -8,14 +8,14 @@ import ru.yandex.qatools.htmlelements.element.TypifiedElement;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class Sugest extends TypifiedElement {
+public class Menu extends TypifiedElement{
 
-    public Sugest(WebElement wrappedElement){
+    public Menu(WebElement wrappedElement){
         super(wrappedElement);
     }
 
     private List<WebElement> getItems(){
-        return getWrappedElement().findElements(By.xpath("//li"));
+        return getWrappedElement().findElements(By.xpath("//*/a"));
     }
 
     public void selectByIndex(int itemIndex){
@@ -29,7 +29,7 @@ public class Sugest extends TypifiedElement {
                 return;
             }
         }
-        throw new  NoSuchElementException();
+        throw new NoSuchElementException();
     }
 
 }

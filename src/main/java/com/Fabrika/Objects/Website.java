@@ -1,8 +1,9 @@
 package com.Fabrika.Objects;
 
 
-import com.Fabrika.Objects.Pages.HomePage;
-import com.Fabrika.Objects.Pages.LoginPage;
+import com.Fabrika.Elements.Header.Header1;
+import com.Fabrika.Elements.Header.Header2;
+import com.Fabrika.Objects.Pages.*;
 import com.jayway.restassured.response.Response;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
@@ -13,6 +14,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.yandex.qatools.allure.annotations.Attachment;
 import ru.yandex.qatools.allure.annotations.Step;
 import ru.yandex.qatools.htmlelements.element.TypifiedElement;
+import ru.yandex.qatools.htmlelements.loader.HtmlElementLoader;
+import static ru.yandex.qatools.htmlelements.matchers.DoesElementExistMatcher.*;
 
 import java.util.List;
 import java.util.Map;
@@ -26,6 +29,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotSame;
 import static org.testng.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class Website {
 
@@ -33,11 +37,15 @@ public class Website {
     public static WebDriverWait wait;
     public static final Logger log = Logger.getLogger(Website.class);
 
+    public static Header2 header2;
+    public static Header1 header1;
+    public static HomePage homePage;
 
     public Website(EventFiringWebDriver driver){
         this.webDriver = driver;
         wait = new WebDriverWait(driver, 10);
-        PageFactory.initElements(webDriver, this);
+        //PageFactory.initElements(webDriver, this);
+        HtmlElementLoader.populatePageObject(this, driver);
     }
 
     public static final String DOMAIN_NAME = "http://vlay.pythonanywhere.com";
@@ -47,6 +55,9 @@ public class Website {
 
     public LoginPage loginPage(){return new LoginPage(webDriver);}
     public HomePage homePage() { return new HomePage(webDriver);}
+    public RegistrationPage registrationPage(){ return new RegistrationPage(webDriver);}
+    public PostPage postPage(){ return new PostPage(webDriver);}
+    public ProfilePage profilePage(){ return new ProfilePage(webDriver);}
 
 
 
@@ -139,6 +150,16 @@ public class Website {
         }
     }
 
+    public static boolean assertHtmlElementVisibility(TypifiedElement element){
+        try {
+            assertTrue(element.isDisplayed());
+            return true;
+        } catch (AssertionError e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public static boolean verify(String expected, String actual){
         try {
             assertEquals(expected, actual);
@@ -215,8 +236,25 @@ public class Website {
         }
 
     }*/
+    @Step("Logout")
+    public void logOut(){
+        try {
+            if (header2.logoutButton.isDisplayed()){
+                makeScreenshot();
+                header2.pressLogout();
+                waitForTitle(homePage.HOME_PAGE_TITLE);
+                waitForHtmlElement(header1.loginButton);
+                assertHtmlElementVisibility(header1.loginButton);
+                log.info("User was logged out!");
+                makeScreenshot();
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            log.error("Error occured in logout function!");
+        }
+    }
 
-    public void confirmAlert(String alertMessage){
+    public void confirmAlertWithMessage(String alertMessage){
         wait.until(alertIsPresent());
         String allertText =  webDriver.switchTo().alert().getText();
         assertEquals(allertText, alertMessage);

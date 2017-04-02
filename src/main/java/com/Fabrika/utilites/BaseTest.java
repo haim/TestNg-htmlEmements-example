@@ -1,9 +1,9 @@
 package com.Fabrika.utilites;
 
 
-import com.Fabrika.Objects.Pages.HomePage;
+import com.Fabrika.Objects.Pages.*;
+import com.Fabrika.Objects.Verifications;
 import com.Fabrika.Objects.Website;
-import com.Fabrika.Objects.Pages.LoginPage;
 import com.Fabrika.utilites.Listeners.EventListener;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
@@ -22,10 +22,14 @@ public class BaseTest {
     public WebDriver driver;
     public WebDriverWait wait;
     public com.Fabrika.utilites.Listeners.EventListener eventListener;
-    public EventFiringWebDriver webDriver;
+    public static EventFiringWebDriver webDriver;
     public static Website website;
     public static LoginPage loginPage;
     public static HomePage homePage;
+    public static RegistrationPage regPage;
+    public static PostPage postPage;
+    public static ProfilePage profilePage;
+    public static Verifications verifications;
 
 
     public static com.Fabrika.Objects.Pages.LoginPage loginPage2;
@@ -45,9 +49,10 @@ public class BaseTest {
         website = new Website(webDriver);
         loginPage = new LoginPage(webDriver);
         homePage = new HomePage(webDriver);
-
-        loginPage2 = new com.Fabrika.Objects.Pages.LoginPage(webDriver);
-
+        regPage = new RegistrationPage(webDriver);
+        postPage = new PostPage(webDriver);
+        profilePage = new ProfilePage(webDriver);
+        verifications = new Verifications(webDriver);
     }
 
 

@@ -1,14 +1,12 @@
 package com.Fabrika.Objects.Pages;
 
 import com.Fabrika.Objects.Website;
-import com.Fabrika.Elements.Footer;
+import com.Fabrika.Elements.Footer.Footer;
 import com.Fabrika.Elements.LoginPage.LoginForm;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import ru.yandex.qatools.htmlelements.loader.HtmlElementLoader;
-
-
 
 import static org.hamcrest.MatcherAssert.assertThat;
 

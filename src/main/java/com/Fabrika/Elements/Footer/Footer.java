@@ -1,6 +1,6 @@
-package com.Fabrika.Elements;
+package com.Fabrika.Elements.Footer;
 
-import com.Fabrika.utilites.TypifiedElements.Menu;
+import com.Fabrika.Elements.TypifiedElements.Menu;
 import com.Fabrika.Objects.Website;
 import org.openqa.selenium.support.FindBy;
 import ru.yandex.qatools.htmlelements.annotations.Block;

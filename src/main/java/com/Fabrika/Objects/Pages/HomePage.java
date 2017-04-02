@@ -5,6 +5,7 @@ import com.Fabrika.Elements.Header.Header1;
 import com.Fabrika.Elements.Header.Header2;
 import com.Fabrika.Elements.HomePage.FlashMessageForm;
 import com.Fabrika.Elements.HomePage.MessageForm;
+import com.Fabrika.Elements.HomePage.PostForm;
 import com.Fabrika.Objects.Website;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import ru.yandex.qatools.allure.annotations.Step;
@@ -25,6 +26,7 @@ public class HomePage {
     public static Header2 header2;
     public static MessageForm messageForm;
     public static FlashMessageForm flashMessageForm;
+    public static PostForm postForm;
 
     public HomePage(EventFiringWebDriver driver){
         HtmlElementLoader.populatePageObject(this, driver);
@@ -43,12 +45,15 @@ public class HomePage {
     }
 
     public void viewMessage(String messageText){
+        website.waitForElement(flashMessageForm);
         messageForm.viewMessage(messageText);
+        website.waitForHtmlElement(postForm.backButton);
     }
 
     public void deleteMessage(String messageText){
         messageForm.deleteMessage(messageText);
         website.confirmAlert();
+        website.waitForElement(flashMessageForm);
     }
 
 

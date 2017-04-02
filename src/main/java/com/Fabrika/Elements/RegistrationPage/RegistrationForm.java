@@ -1,6 +1,7 @@
 package com.Fabrika.Elements.RegistrationPage;
 
 
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import ru.yandex.qatools.htmlelements.annotations.Block;
 import ru.yandex.qatools.htmlelements.element.Button;
@@ -20,6 +21,7 @@ public class RegistrationForm extends HtmlElement {
     @FindBy(id = "auth_user_nickname") public static TextInput nickNameField;
     @FindBy(id = "auth_user_image") public static HtmlElement imageField;
     @FindBy(xpath = "//*/input[@value='Register']") public static Button registerButton;
+    @FindBy(className = "error") public static WebElement errorMessage;
 
     public void register(String firstName, String lastName, String email, String password, String rePassword, String nickname){
         firstNameField.sendKeys(firstName);
@@ -30,6 +32,8 @@ public class RegistrationForm extends HtmlElement {
         nickNameField.sendKeys(nickname);
         registerButton.click();
     }
+
+
 
 
 }

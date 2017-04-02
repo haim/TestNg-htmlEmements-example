@@ -4,7 +4,7 @@ package com.Fabrika.Elements.TypifiedElements;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import ru.yandex.qatools.htmlelements.element.TypifiedElement;
-
+import static org.testng.Assert.*;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -64,6 +64,16 @@ public class MessageTable extends TypifiedElement {
             if (userNameWithId.contains(item.findElement(By.xpath("//td[2]")).getText())){
                 WebElement button = item.findElement(By.xpath("//*/a/span[@title='Delete']"));
                 button.click();
+                return;
+            }
+        }
+        throw new NoSuchElementException();
+    }
+
+    public void findMessageText(String message){
+        for (WebElement item: getItems()){
+            if (message.contains(item.findElement(By.xpath("//td")).getText())){
+                assertEquals(message, item.findElement(By.xpath("//td")).getText());
                 return;
             }
         }

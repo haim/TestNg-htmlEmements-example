@@ -1,6 +1,7 @@
 package com.Fabrika.utilites;
 
 
+import com.Fabrika.Elements.HomePage.PostForm;
 import com.Fabrika.Objects.Pages.*;
 import com.Fabrika.Objects.Verifications;
 import com.Fabrika.Objects.Website;
@@ -31,9 +32,7 @@ public class BaseTest {
     public static ProfilePage profilePage;
     public static Verifications verifications;
 
-
-    public static com.Fabrika.Objects.Pages.LoginPage loginPage2;
-
+    public static PostForm postForm;
 
     @BeforeClass(alwaysRun = true)
     @Parameters({"browserType"})

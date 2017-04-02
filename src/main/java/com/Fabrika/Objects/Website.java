@@ -242,7 +242,7 @@ public class Website {
             if (header2.logoutButton.isDisplayed()){
                 makeScreenshot();
                 header2.pressLogout();
-                waitForTitle(homePage.HOME_PAGE_TITLE);
+                //waitForTitle(homePage.HOME_PAGE_TITLE);
                 waitForHtmlElement(header1.loginButton);
                 assertHtmlElementVisibility(header1.loginButton);
                 log.info("User was logged out!");

@@ -2,6 +2,7 @@ package com.Fabrika;
 
 
 
+import com.Fabrika.DataProviders.RegistrationData;
 import com.Fabrika.utilites.BaseTest;
 import com.Fabrika.utilites.Listeners.TestListener;
 import org.testng.Assert;
@@ -9,6 +10,8 @@ import org.testng.annotations.*;
 import org.testng.annotations.Test;
 import ru.yandex.qatools.allure.annotations.Description;
 import ru.yandex.qatools.allure.annotations.Title;
+import ru.yandex.qatools.htmlelements.matchers.DoesElementExistMatcher;
+import static org.testng.Assert.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 
@@ -20,69 +23,71 @@ public class SmokeTests extends BaseTest {
 
     @Title("Positive registration")
     @Description("Positive scenario of registration")
-    @Test
+    @Test(priority = 1)
     public void positiveRegistration() throws Exception {
         regPage.openPage();
         regPage.register(regPage.USER_FIRST_NAME, regPage.USER_LAST_NAME, regPage.USR_EMAIL, regPage.USER_PASSWORD, regPage.USER_PASSWORD, regPage.USER_NICKNAME);
         verifications.verifyRegistration();
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @Title("Negativer registration")
+    @Description("Registration with invalid data")
+    @Test(dataProvider = "regData" , dataProviderClass = RegistrationData.class, priority = 2)
+    public void invalidRegistration(String firstName, String lastName, String email, String password, String rePassword, String nickname, String errorMessage) throws Exception {
+        regPage.openPage();
+        regPage.invalidRegister(firstName, lastName, email, password, rePassword, nickname);
+        regPage.validateRegisterError(errorMessage);
+    }
 
 
     @Title("Positive login")
     @Description("positive login test")
-    @Test
-    public void positiveLogin()throws Exception{
+    @Test(priority = 3)
+    public void positivelogin() throws Exception{
         loginPage.openPage();
-        loginPage.login("savva.genchevskiy@gmail.com", "19021992qa");
-        website.waitForElement(homePage.flashMessageForm);
-        homePage.viewMessage("Hello!");
-        Thread.sleep(3000);
-
+        loginPage.login(loginPage.USR_EMAIL, loginPage.USER_PASSWORD);
+        verifications.verifyLogin();
     }
 
-
-    @Test
-    public void test() throws Exception{
-        homePage.openPage();
-        homePage.pressHome();
-        Thread.sleep(2000);
-    }
-
-    @Title("positive registration")
-    @Description("registration test")
-    @Test
-    public void positiversdasRegistration(){
-        regPage.openPage();
-        regPage.register(regPage.USER_FIRST_NAME, regPage.USER_LAST_NAME, regPage.USR_EMAIL, regPage.USER_PASSWORD, regPage.USER_PASSWORD, regPage.USER_NICKNAME);
-    }
-
-
-    @Test
-    public void test21() throws Exception{
-        loginPage.openPage();
-        loginPage.login("savva.genchevskiy+1@gmail.com", "19021992qa");
-        website.waitForElement(homePage.flashMessageForm);
+    @Title("Delete profile")
+    @Description("Profile deleting test")
+    @Test(priority = 4)
+    public void deleteProfile(){
+        website.loginUser(regPage.USR_EMAIL, regPage.USER_PASSWORD);
         profilePage.openPage();
         profilePage.deleteProfile();
+        verifications.verifyProfileDeleting();
     }
 
 
+    @Title("Post message creation")
+    @Description("Post creation test")
+    @Test(priority = 5)
+    public void createPost(){
+        website.loginUser(loginPage.USR_EMAIL, loginPage.USER_PASSWORD);
+        postPage.openPage();
+        postPage.createMessage(postPage.NEW_MESSAGE);
+        verifications.verifyPostExist(postPage.NEW_MESSAGE);
+    }
 
+    @Title("View message")
+    @Description("message opening")
+    @Test(priority = 6)
+    public void viewPost(){
+        website.loginUser(loginPage.USR_EMAIL, loginPage.USER_PASSWORD);
+        homePage.viewMessage(postPage.NEW_MESSAGE);
+        assertThat(homePage.postForm, DoesElementExistMatcher.exists());
+        assertEquals(homePage.postForm.messageField.getText(), postPage.NEW_MESSAGE);
 
+    }
+
+    @Title("Delete message")
+    @Description("message opening")
+    @Test(priority = 7)
+    public void deletePost(){
+        website.loginUser(loginPage.USR_EMAIL, loginPage.USER_PASSWORD);
+        homePage.deleteMessage(postPage.NEW_MESSAGE);
+    }
 
 
 

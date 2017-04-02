@@ -7,7 +7,6 @@ import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import ru.yandex.qatools.htmlelements.loader.HtmlElementLoader;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class LoginPage {
@@ -41,10 +40,9 @@ public class LoginPage {
     public void login(String email, String password){
         website.waitForHtmlElement(loginForm.emailField);
         loginForm.login(email,password);
-        website.waitForTitle(homePage.HOME_PAGE_TITLE);
+        website.waitForElement(homePage.flashMessageForm);
         //assertThat(loginForm.remeberMeCheckBox, isSelected());
     }
-
 
     public void pressAbout(){
         footer.pressAbout();

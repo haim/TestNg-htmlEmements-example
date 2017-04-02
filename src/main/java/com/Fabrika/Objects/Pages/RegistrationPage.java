@@ -8,6 +8,11 @@ import com.Fabrika.Objects.Website;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.yandex.qatools.htmlelements.loader.HtmlElementLoader;
+import ru.yandex.qatools.htmlelements.matchers.DoesElementExistMatcher;
+
+import static org.testng.Assert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static com.Fabrika.Objects.Website.*;
 
 public class RegistrationPage {
 
@@ -37,8 +42,21 @@ public class RegistrationPage {
     }
 
     public void register(String firstName, String lastName, String email, String password, String rePassword, String nickname){
+        assertThat(registrationForm, DoesElementExistMatcher.exists());
         registrationForm.register(firstName, lastName, email, password, rePassword, nickname);
         website.waitForElement(homePage.flashMessageForm);
+        assertHtmlElementVisibility(header2.logoutButton);
+    }
+
+    public void invalidRegister(String firstName, String lastName, String email, String password, String rePassword, String nickname){
+        assertThat(registrationForm, DoesElementExistMatcher.exists());
+        registrationForm.register(firstName, lastName, email, password, rePassword, nickname);
+        website.waitForElement(registrationForm.errorMessage);
+        assertVisibility(registrationForm.errorMessage);
+    }
+
+    public void validateRegisterError(String errorMessage) throws Exception{
+        website.validatePageError(REGISTRATION_PAGE_TITLE, registrationForm.errorMessage, errorMessage);
     }
 
 

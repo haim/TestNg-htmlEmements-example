@@ -1,25 +1,17 @@
 package com.Fabrika;
 
-
-
 import com.Fabrika.DataProviders.RegistrationData;
 import com.Fabrika.utilites.BaseTest;
 import com.Fabrika.utilites.Listeners.TestListener;
-import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import ru.yandex.qatools.allure.annotations.Description;
 import ru.yandex.qatools.allure.annotations.Title;
-import ru.yandex.qatools.htmlelements.matchers.DoesElementExistMatcher;
-import static org.testng.Assert.*;
-import static org.hamcrest.MatcherAssert.assertThat;
 
-
-@Title("Smoke tests")
+@Title("Authorization tests")
 @Description("Tests of main website functionality")
 @Listeners(TestListener.class)
-public class SmokeTests extends BaseTest {
-
+public class AuthorizationTests extends BaseTest {
 
     @Title("Positive registration")
     @Description("Positive scenario of registration")
@@ -58,38 +50,6 @@ public class SmokeTests extends BaseTest {
         profilePage.deleteProfile();
         verifications.verifyProfileDeleting();
     }
-
-
-    @Title("Post message creation")
-    @Description("Post creation test")
-    @Test(priority = 5)
-    public void createPost(){
-        website.loginUser(loginPage.USR_EMAIL, loginPage.USER_PASSWORD);
-        postPage.openPage();
-        postPage.createMessage(postPage.NEW_MESSAGE);
-        verifications.verifyPostExist(postPage.NEW_MESSAGE);
-    }
-
-    @Title("View message")
-    @Description("message opening")
-    @Test(priority = 6)
-    public void viewPost(){
-        website.loginUser(loginPage.USR_EMAIL, loginPage.USER_PASSWORD);
-        homePage.viewMessage(postPage.NEW_MESSAGE);
-        assertThat(homePage.postForm, DoesElementExistMatcher.exists());
-        assertEquals(homePage.postForm.messageField.getText(), postPage.NEW_MESSAGE);
-
-    }
-
-    @Title("Delete message")
-    @Description("message opening")
-    @Test(priority = 7)
-    public void deletePost(){
-        website.loginUser(loginPage.USR_EMAIL, loginPage.USER_PASSWORD);
-        homePage.deleteMessage(postPage.NEW_MESSAGE);
-    }
-
-
 
 
 

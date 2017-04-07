@@ -6,6 +6,7 @@ import com.Fabrika.Elements.PostPage.PostMesageForm;
 import com.Fabrika.Objects.Website;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import ru.yandex.qatools.allure.annotations.Step;
 import ru.yandex.qatools.htmlelements.loader.HtmlElementLoader;
 
 import static org.testng.Assert.*;
@@ -28,10 +29,12 @@ public class PostPage {
         website = new Website(driver);
     }
 
+    @Step
     public void openPage(){
         website.loadPage(POST_PAGE_URL, POST_PAGE_TITLE);
     }
 
+    @Step
     public void createMessage(String text){
         postMesageForm.createMessage(text);
         website.waitForTitle(homePage.HOME_PAGE_TITLE);

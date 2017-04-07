@@ -8,10 +8,19 @@
         <listener class-name="com.Fabrika.utilites.Listeners.TestListener"/>
     </listeners>-->
 
-    <test name="tests">
-
+   <!-- <test name="Authorization tests">
         <classes>
-            <class name="com.Fabrika.SmokeTests"/>
+            <class name="com.Fabrika.AuthorizationTests"/>
+        </classes>
+    </test>-->
+    <test name="Post Message Tests">
+        <classes>
+            <class name="com.Fabrika.PostMessageTests"/>
+        </classes>
+    </test>
+    <test name="Home page tests">
+        <classes>
+            <class name="com.Fabrika.HomePageTests"/>
         </classes>
     </test>
 </suite>

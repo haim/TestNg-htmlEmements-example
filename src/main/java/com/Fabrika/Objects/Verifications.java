@@ -78,18 +78,17 @@ public class Verifications {
         verify(profilePage.flashMessage.getText(), profilePage.DELETE_MESSAGE);
     }
 
-    @Step("verify post with message: \"{0}\" is deleted")
+    @Step("verify post with message: \"{0}\" exist")
     public void verifyPostExist(String message){
-        try {
-            assertThat(messageForm, DoesElementExistMatcher.exists());
-            messageForm.verifyMessage(message);
-        } catch (Exception e){
-            e.printStackTrace();
-            log.error("Error occured while post searching: " + "\n" + e.getMessage());
-        } finally {
-            website.logOut();
-            website.makeScreenshot();
-        }
+        assertThat(messageForm, DoesElementExistMatcher.exists());
+        messageForm.verifyMessage(message);
+    }
+
+    @Step("verify post with message: \"{0}\" is deleted")
+    public void verifyPostDeleted(String message){
+        assertThat(messageForm, DoesElementExistMatcher.exists());
+        messageForm.verifyPostDeleted(message);
+
     }
 
 

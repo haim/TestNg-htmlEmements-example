@@ -7,6 +7,7 @@ import com.Fabrika.Elements.RegistrationPage.RegistrationForm;
 import com.Fabrika.Objects.Website;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import ru.yandex.qatools.allure.annotations.Step;
 import ru.yandex.qatools.htmlelements.loader.HtmlElementLoader;
 import ru.yandex.qatools.htmlelements.matchers.DoesElementExistMatcher;
 
@@ -36,25 +37,26 @@ public class RegistrationPage {
         website = new Website(driver);
     }
 
+    @Step
     public void openPage(){
         website.loadPage(REGISTRATION_PAGE_URL, REGISTRATION_PAGE_TITLE);
         website.waitForHtmlElement(registrationForm.emailField);
     }
-
+    @Step
     public void register(String firstName, String lastName, String email, String password, String rePassword, String nickname){
         assertThat(registrationForm, DoesElementExistMatcher.exists());
         registrationForm.register(firstName, lastName, email, password, rePassword, nickname);
         website.waitForElement(homePage.flashMessageForm);
         assertHtmlElementVisibility(header2.logoutButton);
     }
-
+    @Step
     public void invalidRegister(String firstName, String lastName, String email, String password, String rePassword, String nickname){
         assertThat(registrationForm, DoesElementExistMatcher.exists());
         registrationForm.register(firstName, lastName, email, password, rePassword, nickname);
         website.waitForElement(registrationForm.errorMessage);
         assertVisibility(registrationForm.errorMessage);
     }
-
+    @Step
     public void validateRegisterError(String errorMessage) throws Exception{
         website.validatePageError(REGISTRATION_PAGE_TITLE, registrationForm.errorMessage, errorMessage);
     }

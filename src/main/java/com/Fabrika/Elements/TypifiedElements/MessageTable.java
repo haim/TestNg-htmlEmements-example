@@ -18,6 +18,7 @@ public class MessageTable extends TypifiedElement {
         return getWrappedElement().findElements(By.xpath("//*/tr"));
     }
 
+
     public void viewByMessage(String itemValue){
         for (WebElement item: getItems()){
             if (itemValue.contains(item.findElement(By.xpath("//td")).getText())){
@@ -74,6 +75,16 @@ public class MessageTable extends TypifiedElement {
         for (WebElement item: getItems()){
             if (message.contains(item.findElement(By.xpath("//td")).getText())){
                 assertEquals(message, item.findElement(By.xpath("//td")).getText());
+                return;
+            }
+        }
+        throw new NoSuchElementException();
+    }
+
+    public void verifyMessageDeleted(String message){
+        for (WebElement item: getItems()){
+            if (message.contains(item.findElement(By.xpath("//td")).getText())){
+                assertFalse(message == item.findElement(By.xpath("//td")).getText());
                 return;
             }
         }

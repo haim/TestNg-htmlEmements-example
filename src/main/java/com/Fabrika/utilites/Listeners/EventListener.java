@@ -130,15 +130,21 @@ public class EventListener implements WebDriverEventListener {
     public void onException(Throwable error, WebDriver webDriver) {
         makeScreenshot(webDriver);
         log.error("Exception occured: " + error.getMessage());
+
         if (error.getClass().equals(NoSuchElementException.class)) {
+            makeScreenshot(webDriver);
             log.error("WebDriver error: Element not found " + lastFindBy);
         } else if (error.getClass().equals(AssertionError.class)) {
+            makeScreenshot(webDriver);
             log.error("WebDriver error: Assertion error found " + lastFindBy);
         } else if (error.getClass().equals(TimeoutException.class)) {
+            makeScreenshot(webDriver);
             log.error("WebDriver error: Exception fount waiting for element " + lastFindBy);
         } else if (error.getClass().equals(Exception.class)) {
+            makeScreenshot(webDriver);
             log.error("WebDriver error: Exception was found " + lastFindBy);
         } else {
+            makeScreenshot(webDriver);
             log.error("WebDriver error:", error);
         }
     }

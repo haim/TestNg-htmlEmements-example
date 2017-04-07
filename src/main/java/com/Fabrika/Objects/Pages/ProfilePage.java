@@ -6,6 +6,7 @@ import com.Fabrika.Elements.ProfilePage.ProfileDeleteFlashMessage;
 import com.Fabrika.Elements.ProfilePage.ProfileForm;
 import com.Fabrika.Objects.Website;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
+import ru.yandex.qatools.allure.annotations.Step;
 import ru.yandex.qatools.htmlelements.loader.HtmlElementLoader;
 
 public class ProfilePage {
@@ -28,10 +29,12 @@ public class ProfilePage {
         website = new Website(driver);
     }
 
+    @Step
     public void openPage(){
         website.loadPage(PROFILE_PAGE_URL, PROFIEL_PAGE_TITLE);
     }
 
+    @Step
     public void deleteProfile(){
         profileForm.selectDeleteCheckBox();
         website.confirmAlert();
@@ -39,6 +42,7 @@ public class ProfilePage {
         website.waitForElement(flashMessage);
     }
 
+    @Step
     public void pressHome(){
         deletePageForm.pressHome();
         website.waitForTitle(homePage.HOME_PAGE_TITLE);

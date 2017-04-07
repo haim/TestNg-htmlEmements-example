@@ -6,6 +6,7 @@ import com.Fabrika.Elements.LoginPage.LoginForm;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import ru.yandex.qatools.allure.annotations.Step;
 import ru.yandex.qatools.htmlelements.loader.HtmlElementLoader;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -32,11 +33,12 @@ public class LoginPage {
     }
 
 
-
+    @Step
     public void openPage(){
         website.loadPage(LOGIN_PAGE_URL, LOGIN_PAGE_TITLE);
     }
 
+    @Step
     public void login(String email, String password){
         website.waitForHtmlElement(loginForm.emailField);
         loginForm.login(email,password);
@@ -44,6 +46,7 @@ public class LoginPage {
         //assertThat(loginForm.remeberMeCheckBox, isSelected());
     }
 
+    @Step
     public void pressAbout(){
         footer.pressAbout();
     }

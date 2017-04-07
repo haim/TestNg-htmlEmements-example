@@ -9,7 +9,7 @@ import ru.yandex.qatools.htmlelements.element.Button;
 import ru.yandex.qatools.htmlelements.element.HtmlElement;
 import static org.testng.Assert.*;
 
-@Block(@FindBy(className = "web2py_table"))
+@Block(@FindBy(tagName = "table"))
 public class MessageForm extends HtmlElement {
 
     @FindBy(className = "web2py_counter") public static TextBlock messageCounter;
@@ -25,6 +25,10 @@ public class MessageForm extends HtmlElement {
 
     public void verifyMessage(String message){
         messagesTable.findMessageText(message);
+    }
+
+    public void verifyPostDeleted(String message){
+        messagesTable.verifyMessageDeleted(message);
     }
 
 

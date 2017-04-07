@@ -58,7 +58,10 @@ public class Website {
     public RegistrationPage registrationPage(){ return new RegistrationPage(webDriver);}
     public PostPage postPage(){ return new PostPage(webDriver);}
     public ProfilePage profilePage(){ return new ProfilePage(webDriver);}
-
+    public AboutPage aboutPage(){ return new AboutPage(webDriver);}
+    public ContactsPage contactsPage(){ return new ContactsPage(webDriver);}
+    public DescriptionPage descriptionPage(){ return new DescriptionPage(webDriver);}
+    public TermsPage termsPage(){ return new TermsPage(webDriver);}
 
 
     @Attachment

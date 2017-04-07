@@ -9,10 +9,8 @@ import com.Fabrika.utilites.Listeners.EventListener;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
+import org.testng.ITestResult;
+import org.testng.annotations.*;
 
 import java.util.concurrent.TimeUnit;
 
@@ -30,7 +28,12 @@ public class BaseTest {
     public static RegistrationPage regPage;
     public static PostPage postPage;
     public static ProfilePage profilePage;
+    public static AboutPage aboutPage;
+    public static ContactsPage contactsPage;
+    public static DescriptionPage descriptionPage;
+    public static TermsPage termsPage;
     public static Verifications verifications;
+
 
     public static PostForm postForm;
 
@@ -52,7 +55,12 @@ public class BaseTest {
         postPage = new PostPage(webDriver);
         profilePage = new ProfilePage(webDriver);
         verifications = new Verifications(webDriver);
+        aboutPage = new AboutPage(webDriver);
+        contactsPage = new ContactsPage(webDriver);
+        descriptionPage = new DescriptionPage(webDriver);
+        termsPage = new TermsPage(webDriver);
     }
+
 
 
     @AfterClass(alwaysRun = true)
